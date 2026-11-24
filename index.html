@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Águila: Colecciona la Navidad</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css"></head>
+<body>
+<div class="snow"></div><canvas id="cf"></canvas>
+<header><div class="logo" onclick="go(user()?'col':'home')">ÁGUILA</div>
+<nav id="nav"></nav></header>
+<main>
+<!-- PORTADA -->
+<section class="v on" id="home">
+ <div class="hero">
+  <div class="tag">Águila · Edición especial</div>
+  <h1>ESTA NAVIDAD<br><span>SE COLECCIONA</span></h1>
+  <p>Cuatro momentos de diciembre te esperan. Colecciónalos, completa tu experiencia y desbloquea la oportunidad de ganar una fiesta inolvidable.</p>
+  <button class="btn" onclick="start()">Comenzar mi colección</button>
+  <div class="bottles" id="bottles"></div>
+ </div>
+ <div class="steps">
+  <div class="step"><b>1</b>Consigue las 4 botellas de edición especial.</div>
+  <div class="step"><b>2</b>Desprende la etiqueta de la parte trasera de la botella.</div>
+  <div class="step"><b>3</b>Escanea el QR: cada uno desbloquea una tarjeta distinta.</div>
+  <div class="step"><b>4</b>Completa los 4 momentos, abre el portal y participa por la fiesta.</div>
+ </div>
+ <div class="motto">Colecciona los cuatro momentos. Desbloquea la fiesta. Vive la Navidad con Águila.</div>
+</section>
+<!-- COLECCIÓN -->
+<section class="v" id="col">
+ <h2>MI COLECCIÓN NAVIDEÑA</h2>
+ <p class="sub">Cada momento cuenta. Escanea los códigos QR de tus botellas y completa los cuatro momentos de diciembre.</p>
+ <div class="prog"><b class="bebas" style="font-size:26px;color:var(--gold2)" id="ptxt"></b><div class="bar"><i id="pbar"></i></div></div>
+ <div class="grid" id="cards"></div>
+ <div class="cta"><button class="btn" onclick="openScan()">📷 Escanear mi QR</button>
+ <p class="sub" style="margin-top:14px" id="hello"></p></div>
+</section>
+<!-- PORTAL -->
+<section class="v" id="por">
+ <h2 id="ptitle">TU FIESTA TE ESTÁ ESPERANDO</h2>
+ <div class="portal" id="portal"><div class="rays">🎉</div><div class="door l">🔒</div><div class="door r">🔒</div></div>
+ <div class="msg" id="pmsg"></div>
+</section>
+<!-- CONCURSO -->
+<section class="v" id="con">
+ <h2>ÚLTIMO PASO</h2>
+ <p class="sub">Confirma tus datos para completar tu inscripción.</p>
+ <form class="box" style="margin:auto" onsubmit="return enter(event)">
+  <label>Nombre completo</label><input type="text" id="c_n" required>
+  <label>Correo electrónico</label><input type="email" id="c_e" required>
+  <label>Número de celular</label><input type="tel" id="c_t" required>
+  <label>Ciudad</label><input type="text" id="c_c" required>
+  <div class="chk"><input type="checkbox" id="c_ok" required><span>Confirmo que mis datos son correctos.</span></div>
+  <div class="chk"><input type="checkbox" id="c_tc" required><span>Acepto los <a href="#" style="color:var(--gold)">términos y condiciones del concurso</a> <small>(enlace configurable: CONFIG.contestTermsUrl)</small>.</span></div>
+  <div class="err" id="c_err"></div>
+  <button class="btn">Quiero ganar la fiesta</button>
+ </form>
+</section>
+<!-- GRACIAS -->
+<section class="v" id="fin">
+ <div class="msg" style="padding-top:50px"><div style="font-size:90px">🎆</div>
+ <h2>¡YA ESTÁS PARTICIPANDO!</h2>
+ <p>Gracias por coleccionar los cuatro momentos de diciembre con Águila. Ahora prepárate, porque la próxima gran fiesta podría ser tuya.</p>
+ <button class="btn ghost" onclick="go('col')">Ver mi colección</button></div>
+</section>
+</main>
+<footer>Prototipo demostrativo · Beber con responsabilidad · Solo para mayores de edad · Términos oficiales configurables</footer>
+
+<!-- AUTH -->
+<div class="modal" id="auth"><div class="box">
+ <button class="x" onclick="hide('auth')">×</button>
+ <h3>CREA TU COLECCIÓN</h3>
+ <div class="tabs"><button id="t_r" class="on" onclick="tab('r')">Registrarme</button><button id="t_l" onclick="tab('l')">Ya tengo cuenta</button></div>
+ <form onsubmit="return auth(event)">
+  <div id="f_r"><label>Nombre completo</label><input type="text" id="a_n">
+  <label>Número de celular</label><input type="tel" id="a_t"></div>
+  <label>Correo electrónico</label><input type="email" id="a_e" required>
+  <div id="f_r2"><div class="chk"><input type="checkbox" id="a_age"><span>Confirmo que soy mayor de edad.</span></div>
+  <div class="chk"><input type="checkbox" id="a_tc"><span>Acepto los términos y condiciones.</span></div>
+  <div class="chk"><input type="checkbox" id="a_dp"><span>Autorizo el tratamiento de mis datos personales.</span></div></div>
+  <div class="err" id="a_err"></div>
+  <button class="btn" id="a_btn">Crear mi colección</button>
+ </form></div></div>
+<!-- SCAN -->
+<div class="modal" id="scan"><div class="box">
+ <button class="x" onclick="closeScan()">×</button>
+ <h3>ESCANEA TU QR</h3>
+ <div class="cam"><video id="vid" playsinline muted></video></div>
+ <div class="res" id="res">Apunta la cámara al código de la etiqueta.</div>
+ <form onsubmit="return manual(event)" style="display:flex;gap:6px"><input type="text" id="man" placeholder="¿Sin cámara? Escribe el código"><button class="btn" style="width:auto;margin:0;padding:0 16px">OK</button></form>
+ <div class="demo" id="demo"></div>
+</div></div>
+
+<script src="vendor/jsQR.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body></html>
